@@ -106,8 +106,8 @@ export default {
   data: () => ({
     drawer: null,
     gestion: [
-        ['Categoria', 'mdi-account-multiple-outline', 'Categoria'],
-        ['Articulo', 'mdi-cog-outline', 'Articulo'],
+        ['Categoria', 'mdi-numeric-9-plus-box', 'Categoria'],
+        ['Articulo', 'mdi-numeric-9-plus-box', 'Articulo'],
       ],
       cruds: [
         ['Usuario', 'mdi-plus-outline', 'Usuario']

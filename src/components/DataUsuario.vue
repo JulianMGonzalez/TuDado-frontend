@@ -177,14 +177,16 @@ export default {
     usuarios: [],
     editedIndex: -1,
     editedItem: {
+      id: 0,
       nombre: '',
       descripcion: 0,
       estado: 0
       
     },
     defaultItem: {
+      id:0,
       nombre: '',
-      descripcion: 0,
+      descripcion: '',
       estado: 0
     },
   }),
@@ -210,16 +212,7 @@ export default {
   },
 
   methods: {
-    initialize () {
-      this.desserts = [
-        {
-          nombre: 'Frozen Yogurt',
-          descripcion: 159,
-          estado: 6.0
-        }
-        
-      ]
-    },
+    
 
     list(){
       axios.get('https://lit-wave-11088.herokuapp.com/api/usuario/list')

@@ -110,7 +110,7 @@
           small
           @click="deleteItem(item)"
         >
-          mdi-delete
+           mdi-swap-vertical
         </v-icon>
       </template>
       <template v-slot:no-data>
@@ -204,7 +204,7 @@ export default {
     },
 
     deleteItemConfirm () {
-      if (this.editedItem === 1) {
+      if (this.editedItem.estado === 1) {
         axios.put('https://lit-wave-11088.herokuapp.com/api/categoria/deactivate',{
           "id": this.editedItem.id
         })
