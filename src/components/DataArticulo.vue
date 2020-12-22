@@ -221,7 +221,7 @@ export default {
     },
 
     list(){
-      axios.get('https://backend-semana4.herokuapp.com/api/articulo/list')
+      axios.get('https://lit-wave-11088.herokuapp.com/api/articulo/list')
       .then(response =>{
         this.articulos = response.data;
       })

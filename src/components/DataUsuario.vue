@@ -222,7 +222,7 @@ export default {
     },
 
     list(){
-      axios.get('https://backend-semana4.herokuapp.com/api/usuario/list')
+      axios.get('https://lit-wave-11088.herokuapp.com/api/usuario/list')
       .then(response =>{
         this.usuarios = response.data;
       })
