@@ -1,6 +1,6 @@
 <template>
 <v-app id="inspire">
-    <v-system-bar app>
+    <v-system-bar app color="orange">
       <v-spacer></v-spacer>
 
       <v-icon color="green">mdi-square</v-icon>
@@ -10,9 +10,15 @@
       <v-icon color="red">mdi-triangle</v-icon>
     </v-system-bar>
 
-    <v-app-bar app color="red lighten-1">
+    <v-app-bar app color="white" >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
+      
+      <v-img
+          lazy-src="https://picsum.photos/id/11/10/6"
+          max-height="50"
+          max-width="50"
+          src="@/assets/TuDado.png"
+      ></v-img>
       <v-toolbar-title>TuDado</v-toolbar-title>
     </v-app-bar>
 
@@ -85,7 +91,7 @@
     </v-card>
     </v-navigation-drawer>
 
-    <v-main class="red lighten-5">
+    <v-main class="grey lighten-5">
       <v-container>
         <router-view/>
       </v-container>
