@@ -87,11 +87,11 @@
           </v-dialog>
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
-              <v-card-title class="headline">¿Quieres eliminar este elemento?</v-card-title>
+              <v-card-title class="headline">¿Quieres cambiar de estado este elemento?</v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">Guardar</v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -100,23 +100,27 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon
-          small
+          medium
           class="mr-2"
           @click="editItem(item)"
+          color="orange"
         >
           mdi-pencil
         </v-icon>
         <v-icon
-          small
+          medium
           @click="deleteItem(item)"
+          color="green"
         >
-           mdi-swap-vertical
+        <template v-if="item.estado">
+            mdi-swap-vertical</template>
+        <template v-else >mdi-swap-horizontal</template>
         </v-icon>
       </template>
       <template v-slot:no-data>
         <v-btn
           color="primary"
-          @click="initialize"
+          @click="list"
         >
           Actualizar
         </v-btn>

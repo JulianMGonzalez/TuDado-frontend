@@ -3,14 +3,14 @@
     <v-system-bar app>
       <v-spacer></v-spacer>
 
-      <v-icon>mdi-square</v-icon>
+      <v-icon color="green">mdi-square</v-icon>
 
-      <v-icon>mdi-circle</v-icon>
+      <v-icon color="yellow">mdi-circle</v-icon>
 
-      <v-icon>mdi-triangle</v-icon>
+      <v-icon color="red">mdi-triangle</v-icon>
     </v-system-bar>
 
-    <v-app-bar app>
+    <v-app-bar app color="red lighten-1">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>TuDado</v-toolbar-title>
@@ -55,7 +55,7 @@
               <v-list-item-title v-text="title"></v-list-item-title>
   
               <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
+                <v-icon v-text="icon" color="red"></v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -77,7 +77,7 @@
               <v-list-item-title v-text="title"></v-list-item-title>
   
               <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
+                <v-icon v-text="icon" color="red"></v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -85,7 +85,7 @@
     </v-card>
     </v-navigation-drawer>
 
-    <v-main class="grey lighten-2">
+    <v-main class="red lighten-5">
       <v-container>
         <router-view/>
       </v-container>
