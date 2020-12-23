@@ -167,7 +167,7 @@ export default {
   methods: {
     list() {
       axios
-        .get("http://localhost:3000/api/categoria/list", {
+        .get("https://lit-wave-11088.herokuapp.com/api/categoria/list", {
           headers: {
             token: this.$store.state.token
           }
@@ -196,7 +196,7 @@ export default {
     deleteItemConfirm() {
       if (this.editedItem.estado === 1) {
         axios
-          .put("http://localhost:3000/api/categoria/deactivate", {
+          .put("https://lit-wave-11088.herokuapp.com/api/categoria/deactivate", {
             id: this.editedItem.id,
           }, {
           headers: {
@@ -211,7 +211,7 @@ export default {
           });
       } else {
         axios
-          .put("http://localhost:3000/api/categoria/activate", {
+          .put("https://lit-wave-11088.herokuapp.com/api/categoria/activate", {
             id: this.editedItem.id,
           }, {
           headers: {
@@ -247,7 +247,7 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-          .put("http://localhost:3000/api/categoria/update", {
+          .put("https://lit-wave-11088.herokuapp.com/api/categoria/update", {
             id: this.editedItem.id,
             nombre: this.editedItem.nombre,
             descripcion: this.editedItem.descripcion,
@@ -264,7 +264,7 @@ export default {
           });
       } else {
         axios
-          .post("http://localhost:3000/api/categoria/add", {
+          .post("https://lit-wave-11088.herokuapp.com/api/categoria/add", {
             id: this.editedItem.id,
             nombre: this.editedItem.nombre,
             descripcion: this.editedItem.descripcion,

@@ -163,6 +163,14 @@
 
   <!-- Sizes your content based upon application components -->
   <v-main >
+    <v-alert
+      border="bottom"
+      colored-border
+      type="warning"
+      elevation="2"
+    >
+      Nos Centramos en el sector cultural. Si bien estas competencias son innatas, todos tenemos la capacidad de poder desarrollarlas. Por ello, estos cursos son muy solicitados, ya que los profesionales necesitan diferenciarse y destacarse dentro del competitivo mercado actual, tanto durante la búsqueda de una oportunidad laboral como en su permanencia y crecimiento dentro de una compañía
+    </v-alert>
     <v-card
     
     max-width="900"
@@ -207,7 +215,7 @@
                 Juan Carlos Garcia
               </v-list-item-title>
               <v-list-item-subtitle>Neiva, Huila</v-list-item-subtitle>
-              <v-list-item-subtitle>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum magnam neque beatae. Recusandae necessitatibus ab tenetur ducimus dolor officia mollitia fugiat magni minus aliquam nobis natus quisquam, cupiditate quod dolore.</v-list-item-subtitle>
+              <v-list-item-subtitle>"El desarrollo de habilidades blandas como: trabajar en equipo, poseer un buen nivel de comunicación, tener adaptabilidad ante los distintos escenarios, una actitud positiva en la oficina me han hecho un mejor trabajador, recomiendo totalmente la pagina para desarrollar estas increibles habilidades! "</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-col>
@@ -255,13 +263,13 @@
       </v-card-text>
 
       <v-card-text class="white--text pt-0">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Las personas transcurren la gran parte del día en sus en sus trabajos, donde se enfrentan frecuentemente a diversos tipos de problemáticas, en este escenario los inconvenientes abundan. Por eso, las habilidades blandas han adquirido gran importancia y valor en el mundo de los negocios, ya que sirven para resolver inconvenientes y enfrentar de manera correcta la jornada laboral.
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong><br>
+        {{ new Date().getFullYear() }} — <strong>TuDado</strong><br>
         <a href="https://github.com/JulianMGonzalez/semana-5-69" class="btn btn-success">GitHub</a>
       </v-card-text>
     </v-card>
