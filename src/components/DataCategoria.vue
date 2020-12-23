@@ -167,7 +167,11 @@ export default {
   methods: {
     list() {
       axios
-        .get("https://lit-wave-11088.herokuapp.com/api/categoria/list")
+        .get("http://localhost:3000/api/categoria/list", {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
         .then((response) => {
           this.categorias = response.data;
           this.cargando = false;
@@ -192,9 +196,13 @@ export default {
     deleteItemConfirm() {
       if (this.editedItem.estado === 1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/categoria/deactivate", {
+          .put("http://localhost:3000/api/categoria/deactivate", {
             id: this.editedItem.id,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -203,9 +211,13 @@ export default {
           });
       } else {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/categoria/activate", {
+          .put("http://localhost:3000/api/categoria/activate", {
             id: this.editedItem.id,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -235,11 +247,15 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/categoria/update", {
+          .put("http://localhost:3000/api/categoria/update", {
             id: this.editedItem.id,
             nombre: this.editedItem.nombre,
             descripcion: this.editedItem.descripcion,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -248,12 +264,16 @@ export default {
           });
       } else {
         axios
-          .post("https://lit-wave-11088.herokuapp.com/api/categoria/add", {
+          .post("http://localhost:3000/api/categoria/add", {
             id: this.editedItem.id,
             nombre: this.editedItem.nombre,
             descripcion: this.editedItem.descripcion,
             estado: 0,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })

@@ -1,151 +1,158 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
+<!-- App.vue -->
+<v-app>
+  <v-banner elevation="7">
+    <h1 class="ml-15 mt-15">Hola</h1>
+  <v-img
+          lazy-src="https://picsum.photos/id/11/10/6"
+          max-height="400"
+          max-width="1000"
+          src="@/assets/TuDado.png"
+      ></v-img>
+  </v-banner>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
+  <v-navigation-drawer class="mt-15"
+      v-model="drawer"
+      :mini-variant.sync="mini"
+    >
+      <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-title>Julian Gonzalez</v-list-item-title>
+        
+        <v-btn
+          icon
+          @click.stop="mini = !mini"
+        >
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+      </v-list-item>
 
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
+      <v-divider></v-divider>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
+      <v-list dense>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
 
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  <v-app-bar app
+      color="blue"
+      dense
+      dark
+    >
+      <v-img
+          lazy-src="https://picsum.photos/id/11/10/6"
+          max-height="50"
+          max-width="50"
+          src="@/assets/TuDado.png"
+      ></v-img>
+      <v-toolbar-title>TuDado</v-toolbar-title>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
+      <v-spacer></v-spacer>
 
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
+      <v-btn
+      depressed
+      color="primary"
+      class="mr-5"
+    >
+      Inicio
+    </v-btn>
+      <v-btn
+      depressed
+      color="primary"
+      class="mr-5"
+    >
+      Servicio
+    </v-btn>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
+      <v-btn
+      depressed
+      color="primary"
+      @click="entrar()"
+    >
+        Iniciar sesion
+    </v-btn>
+    </v-app-bar>
+  
 
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+  <!-- Sizes your content based upon application components -->
+  <v-main>
+    <!-- Provides the application the proper gutter -->
+    <v-container>
+      <!-- If using vue-router -->
+      <router-view></router-view>
+    </v-container>
+  </v-main>
+  
+
+  <v-footer
+  dark
+  >
+    <v-card
+      flat
+      tile
+      class="indigo lighten-1 white--text text-center"
+    >
+      <v-card-text>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4 white--text"
+          icon
+        >
+          <v-icon size="24px">
+            {{ icon }}
+          </v-icon>
+        </v-btn>
+      </v-card-text>
+
+      <v-card-text class="white--text pt-0">
+        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-text class="white--text">
+        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+      </v-card-text>
+    </v-card>
+  </v-footer>
+</v-app>
+  
 </template>
 
 <script>
   export default {
-    name: 'HelloWorld',
-
     data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
+      drawer: true,
+      icons: [
+        'mdi-facebook',
+        'mdi-twitter',
+        'mdi-linkedin',
+        'mdi-instagram',
       ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
+      items: [
+          { title: 'Inicio', icon: 'mdi-home-city' },
+        ],
+      mini: true,
     }),
+    methods:{
+      entrar(){
+        this.$router.push({name: 'Login'});
+
+  }
+    }
   }
 </script>

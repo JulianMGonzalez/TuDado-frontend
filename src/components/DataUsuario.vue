@@ -189,7 +189,11 @@ export default {
   methods: {
     list() {
       axios
-        .get("https://lit-wave-11088.herokuapp.com/api/usuario/list")
+        .get("http://localhost:3000/api/usuario/list", {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
         .then((response) => {
           this.usuario = response.data;
           this.cargando = false;
@@ -214,7 +218,7 @@ export default {
     deleteItemConfirm() {
       if (this.editedItem.estado === 1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/usuario/deactivate", {
+          .put("http://localhost:3000/api/usuario/deactivate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -225,7 +229,7 @@ export default {
           });
       } else {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/usuario/activate", {
+          .put("http://localhost:3000/api/usuario/activate", {
             id: this.editedItem.id,
           })
           .then((response) => {
@@ -257,7 +261,7 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/usuario/update", {
+          .put("http://localhost:3000/api/usuario/update", {
             "id": this.editedItem.id,
             "nombre": this.editedItem.nombre,
             "email": this.editedItem.email,
@@ -273,7 +277,7 @@ export default {
           });
       } else {
         axios
-          .post("https://lit-wave-11088.herokuapp.com/api/usuario/add", {
+          .post("http://localhost:3000/api/usuario/add", {
             "id": this.editedItem.id,
             "nombre": this.editedItem.nombre,
             "email": this.editedItem.email,

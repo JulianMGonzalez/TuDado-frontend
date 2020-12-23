@@ -42,14 +42,14 @@ export default {
     },
     methods:{
         ingresar(){
-            axios.post('https://lit-wave-11088.herokuapp.com/api/usuario/login',{email: this.email, password: this.password})
+            axios.post('http://localhost:3000/api/usuario/login',{email: this.email, password: this.password})
             .then(respuesta =>{
                  console.log(respuesta.data);
                 return respuesta.data;
             })
             .then(data =>{
                 this.$store.dispatch("guardarToken",data.tokenReturn);
-                this.$router.push({name: 'Admin'});
+                this.$router.push({name: 'Home'});
             })
             .catch(error =>{
                 //console.log(eror);

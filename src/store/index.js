@@ -25,13 +25,12 @@ export default new Vuex.Store({
             localStorage.setItem("token", token)
         },
         autoLogin({ commit }) {
-            console.log("autologin");
             let token = localStorage.getItem("token");
             if (token) {
                 commit("setToken", token);
                 commit("setUsuario", decode(token));
             }
-            router.push({ name: 'Admin' }).catch(() => {});
+            router.push({ name: 'Login' }).catch(() => {});
 
         },
         salir({ commit }) {
