@@ -1,270 +1,295 @@
 <template>
   <div id="app">
-  <v-app id="inspire">
-    <v-data-table
-      :headers="headers"
-      :items="usuarios"
-      sort-by="nombre"
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-toolbar
-          flat
-        >
-          <v-toolbar-title>Usuarios</v-toolbar-title>
-          <v-divider
-            class="mx-4"
-            inset
-            vertical
-          ></v-divider>
-          <v-spacer></v-spacer>
-          <v-dialog
-            v-model="dialog"
-            max-width="500px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                color="primary"
-                dark
-                class="mb-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                Agregar Usuario
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-  
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.name"
-                        label="Nombre"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.calories"
-                        label="Calories"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.fat"
-                        label="Fat (g)"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.carbs"
-                        label="Carbs (g)"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="4"
-                    >
-                      <v-text-field
-                        v-model="editedItem.protein"
-                        label="Protein (g)"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-  
-              <v-card-actions>
-                <v-spacer></v-spacer>
+    <v-app id="inspire">
+      <v-data-table
+        :headers="headers"
+        :items="usuario"
+        sort-by="nombre"
+        class="elevation-1"
+        :loading="cargando"
+        loading-text="Cargando... espera"
+        :search="search"
+      >
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-toolbar-title>Usuario</v-toolbar-title>
+            <v-divider class="mx-4" inset vertical></v-divider>
+            <v-spacer></v-spacer>
+            <template
+              ><v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Buscar"
+                single-line
+                hide-details
+              ></v-text-field
+            ></template>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialog" max-width="500px">
+              <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="close"
+                  color="primary"
+                  dark
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
                 >
-                  Cancelar
+                  Agregar Usuario
                 </v-btn>
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="save"
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline"> {{ formTitle }} </span>
+                </v-card-title>
+
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.id"
+                          label="Id"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.nombre"
+                          label="Nombre"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.email"
+                          label="Email"
+                          auto-grow
+                          no-resize
+                          counter="256"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.password"
+                          label="Contraseña"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" sm="6" md="6">
+                        <v-text-field
+                          v-model="editedItem.rol"
+                          label="Rol"
+                        ></v-text-field>
+                      </v-col>
+                      
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="close">
+                    Cancelar
+                  </v-btn>
+                  <v-btn color="blue darken-1" text @click="save">
+                    Guardar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-card>
+                <v-card-title class="headline"
+                  >¿Quieres cambiar de estado este elemento?</v-card-title
                 >
-                  Guardar
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-              <v-card-title class="headline">¿Quieres eliminar este elemento?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                <v-spacer></v-spacer>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
-        <v-icon
-          small
-          @click="deleteItem(item)"
-        >
-          mdi-delete
-        </v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn
-          color="primary"
-          @click="initialize"
-        >
-          Actualizar
-        </v-btn>
-      </template>
-    </v-data-table>
-  </v-app>
-</div>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="closeDelete"
+                    >Cancelar</v-btn
+                  >
+                  <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                    >Guardar</v-btn
+                  >
+                  <v-spacer></v-spacer>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-toolbar>
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <v-icon medium class="mr-2" @click="editItem(item)" color="orange">
+            mdi-pencil
+          </v-icon>
+          <v-icon medium @click="deleteItem(item)" color="green">
+            <template v-if="item.estado"> mdi-swap-vertical</template>
+            <template v-else>mdi-swap-horizontal</template>
+          </v-icon>
+        </template>
+        <template v-slot:no-data>
+          <v-btn color="primary" @click="list"> Actualizar </v-btn>
+        </template>
+      </v-data-table>
+    </v-app>
+  </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    cargando: true,
+    search: '',
     headers: [
-      { text: 'ID', value: 'id' },
+      { text: "ID", value: "id" },
       {
-        text: 'Nombre Usuario',
-        align: 'start',
+        text: "Nombre",
+        align: "start",
         sortable: true,
-        value: 'nombre',
+        value: "nombre",
       },
-      { text: 'Email', value: 'email' },
-      { text: 'Estado', value: 'estado' },
-      { text: 'Rol', value: 'rol' },
-      { text: 'Actions', value: 'actions', sortable: false },
+      { text: "E-mail", value: "email" },
+      { text: "Rol", value: "rol" },
+      { text: "Estado", value: "estado" },
+      { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
-    usuarios: [],
+    usuario: [],
     editedIndex: -1,
     editedItem: {
-      id: 0,
-      nombre: '',
-      descripcion: 0,
-      estado: 0
-      
+      id:0,
+      nombre: "",
+      email: "",
+      estado: 0,
     },
     defaultItem: {
       id:0,
-      nombre: '',
-      descripcion: '',
-      estado: 0
+      nombre: "",
+      email: "",
+      estado: 1,
     },
   }),
 
   computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    formTitle() {
+      return this.editedIndex === -1 ? "Agregar categoria" : "Editar categoria";
     },
   },
 
   watch: {
-    dialog (val) {
-      val || this.close()
+    dialog(val) {
+      val || this.close();
     },
-    dialogDelete (val) {
-      val || this.closeDelete()
+    dialogDelete(val) {
+      val || this.closeDelete();
     },
   },
 
-  created () {
-    // this.initialize(),
-    this.list()
+  created() {
+    this.list();
   },
 
   methods: {
-    
-
-    list(){
-      axios.get('https://lit-wave-11088.herokuapp.com/api/usuario/list')
-      .then(response =>{
-        this.usuarios = response.data;
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    list() {
+      axios
+        .get("https://lit-wave-11088.herokuapp.com/api/usuario/list")
+        .then((response) => {
+          this.usuario = response.data;
+          this.cargando = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
-    editItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    editItem(item) {
+      this.editedIndex = item.id;
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
 
-    deleteItem (item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+    deleteItem(item) {
+      this.editedIndex = item.id;
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
     },
 
-    deleteItemConfirm () {
-      this.desserts.splice(this.editedIndex, 1)
-      this.closeDelete()
-    },
-
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    closeDelete () {
-      this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+    deleteItemConfirm() {
+      if (this.editedItem.estado === 1) {
+        axios
+          .put("https://lit-wave-11088.herokuapp.com/api/usuario/deactivate", {
+            id: this.editedItem.id,
+          })
+          .then((response) => {
+            this.list();
+          })
+          .catch((error) => {
+            return error;
+          });
       } else {
-        this.desserts.push(this.editedItem)
+        axios
+          .put("https://lit-wave-11088.herokuapp.com/api/usuario/activate", {
+            id: this.editedItem.id,
+          })
+          .then((response) => {
+            this.list();
+          })
+          .catch((error) => {
+            return error;
+          });
       }
-      this.close()
+      this.closeDelete();
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        axios
+          .put("https://lit-wave-11088.herokuapp.com/api/usuario/update", {
+            "id": this.editedItem.id,
+            "nombre": this.editedItem.nombre,
+            "email": this.editedItem.email,
+            "estado": 0,
+            "password": this.editedItem.password,
+            "rol": this.editedItem.rol,
+          })
+          .then((response) => {
+            this.list();
+          })
+          .catch((error) => {
+            return error;
+          });
+      } else {
+        axios
+          .post("https://lit-wave-11088.herokuapp.com/api/usuario/add", {
+            "id": this.editedItem.id,
+            "nombre": this.editedItem.nombre,
+            "email": this.editedItem.email,
+            "estado": 0,
+            "password": this.editedItem.password,
+            "rol": this.editedItem.rol,
+          })
+          .then((response) => {
+            this.list();
+          })
+          .catch((error) => {
+            return error;
+          });
+      }
+      this.close();
     },
   },
-}
+};
 </script>
