@@ -1,98 +1,73 @@
 <template>
-<v-layout>
-  <v-row>
-    <v-col>
-      <v-card>
-        <v-card-title>
-          login
-        </v-card-title>
-        <v-card-text>
-            <v-form
-    ref="form"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="login.email"
-      :counter="30"
-      label="Correo electronico"
-      required
-    ></v-text-field>
-
-    <v-text-field
-      v-model="login.password"
-      label="Contraseña"
-      type="password"
-      required
-    ></v-text-field>
-
-
-    <v-btn
-      :disabled="!(this.login.password && this.login.email)"
-      color="success"
-      class="mr-4"
-      block
-      @click="loginUser"
-    >
-      Validate
-    </v-btn>
-
-    <v-btn
-      color="error"
-      class="mr-4"
-      @click="reset"
-    >
-      Reset Form
-    </v-btn>
-
-    
-  </v-form>
-        </v-card-text>
-        <v-card-actions>
-
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
-</v-layout>
+    <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md6 lg5 x14>
+            <v-card>
+                <v-toolbar dark color="silver darken-3">
+                    <v-toolbar-title>
+                        Acceso al Sistema
+                    </v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                    <v-text-field v-model="email" autofocus color="accent" label="Email" required>
+                    </v-text-field>
+                    <v-text-field v-model="password" type="password" color="accent" label="Password" required>
+                    </v-text-field>
+                    <v-flex class="red--text" v-if="errorM">
+                        {{errorM}}
+                    </v-flex>
+                </v-card-text>
+                <v-card-actions class="px-3 pb-3">
+                    <v-flex text-xs-right>
+                        <v-btn @click="ingresar()" color="primary">Ingresar</v-btn>
+                    </v-flex>
+                </v-card-actions>
+            </v-card>
+        </v-flex>
+        
+    </v-layout>
 
 </template>
-
 <script>
-import swal from 'sweetalert';
-
+import axios from 'axios';
 export default {
-  name: "TheLogin",
-  data() {
-    return {
-      login: {
-        email: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    async loginUser() {
-      try {
-        let response = await this.$http.post('/api/user/login', this.login);
-        console.log(response);
-        let token = response.data.tokenReturn;
-        let user = response.data.user;
-
-        localStorage.setItem("jwt", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        if (token) {
-          swal("Buen Trabajo!", "Ingresando...", "success");
-          this.$router.push("/home");
+    data(){
+        return{
+            email:'',
+            password:'',
+            errorM:null
         }
-      } catch {
-        swal("Error! :(", "Algo salio mal...", "error");
-        //console.log(error.response);
-      }
     },
-  },
-};
+    beforeCreate(){
+      this.$store.dispatch('autoLogin')//? this.$router.push({name: 'Admin'}): false;
+    },
+    methods:{
+        ingresar(){
+            axios.post('https://lit-wave-11088.herokuapp.com/api/usuario/login',{email: this.email, password: this.password})
+            .then(respuesta =>{
+                 console.log(respuesta.data);
+                return respuesta.data;
+            })
+            .then(data =>{
+                this.$store.dispatch("guardarToken",data.tokenReturn);
+                this.$router.push({name: 'Admin'});
+            })
+            .catch(error =>{
+                //console.log(eror);
+                this.errorM=null;
+                console.log(error.response.status);
+                if (error.response.status==401){
+                    console.log('hola');
+                    this.errorM='credenciales son incorrectas.';
+                } 
+                else if (error.response.status==404){
+                    this.errorM='el usuario no existe';
+                }
+                else{
+                    this.errorM='Ocurrió un error con el servidor.';
+                }
+            });
+        }
+    }
+    
+}
 </script>
-
-<style scoped>
-</style>

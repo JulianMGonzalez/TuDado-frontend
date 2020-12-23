@@ -22,6 +22,15 @@
           src="@/assets/TuDado.png"
       ></v-img>
       <v-toolbar-title>TuDado</v-toolbar-title>
+      <v-spacer></v-spacer>
+
+      <v-btn 
+      icon
+      class="mr-5"
+      @click="salir()">
+          <v-icon> mdi-logout</v-icon>
+          <span>Salir</span>
+      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -68,7 +77,7 @@
             </v-list-item>
           </v-list-group>
   
-          <v-list-group
+          <v-list-group                         
             prepend-icon="mdi-account-circle"
           >
             <template v-slot:activator>
@@ -121,5 +130,15 @@ export default {
         
       ],
   }),
+  created(){
+    this.$store.dispatch('autoLogin');
+  },
+  methods:{
+    salir(){
+    this.$store.dispatch('salir');
+
+  }
+  }
+  
 };
 </script>
