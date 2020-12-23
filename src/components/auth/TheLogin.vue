@@ -19,6 +19,8 @@
                 <v-card-actions class="px-3 pb-3">
                     <v-flex text-xs-right>
                         <v-btn @click="ingresar()" color="primary">Ingresar</v-btn>
+                        <v-divider></v-divider>
+                        <v-btn @click="home()" color="error">A Casa!</v-btn>
                     </v-flex>
                 </v-card-actions>
             </v-card>
@@ -66,6 +68,9 @@ export default {
                     this.errorM='Ocurrió un error con el servidor.';
                 }
             });
+        },
+        home(){
+            this.$router.push({name: 'Home'});
         }
     }
     

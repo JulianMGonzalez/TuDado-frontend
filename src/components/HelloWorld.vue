@@ -1,19 +1,87 @@
 <template>
 <!-- App.vue -->
 <v-app>
-  <v-banner elevation="7">
-    <h1 class="ml-15 mt-15">Hola</h1>
-  <v-img
+  
+  <v-banner elevation="7" class="mt-12">
+      <v-card
+    dark
+    flat
+    tile
+  >
+    <v-window v-model="onboarding">
+      <v-window-item
+        v-for="n in length"
+        :key="`card-${n}`"
+      >
+      
+        <v-card
+          height="300"
+        >
+          <v-row
+            class="fill-height"
+            align="center"
+            justify="center"
+          >
+            <v-img
           lazy-src="https://picsum.photos/id/11/10/6"
-          max-height="400"
-          max-width="1000"
-          src="@/assets/TuDado.png"
+          max-height="300"
+          max-width="1200"
+          src="@/assets/oficina.jpg"
       ></v-img>
+            <v-card-text >
+              <overline
+              style="font-size: 2rem;"
+              class="white--text"
+            >
+              ⠀⠀⠀⠀⠀⠀Hola
+            </overline>
+            </v-card-text>
+            
+          </v-row>
+        </v-card>
+      </v-window-item>
+    </v-window>
+
+    <v-card-actions class="justify-space-between">
+      <v-btn
+        text
+        @click="prev"
+      >
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-item-group
+        v-model="onboarding"
+        class="text-center"
+        mandatory
+      >
+        <v-item
+          v-for="n in length"
+          :key="`btn-${n}`"
+          v-slot="{ active, toggle }"
+        >
+          <v-btn
+            :input-value="active"
+            icon
+            @click="toggle"
+          >
+            <v-icon>mdi-record</v-icon>
+          </v-btn>
+        </v-item>
+      </v-item-group>
+      <v-btn
+        text
+        @click="next"
+      >
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
   </v-banner>
 
-  <v-navigation-drawer class="mt-15"
+  <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
+      app
     >
       <v-list-item class="px-2">
         <v-list-item-avatar>
@@ -27,30 +95,33 @@
         >
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
+        
       </v-list-item>
+      
 
       <v-divider></v-divider>
 
       <v-list dense>
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+              v-for="([title, icon, ruta], i) in items"
+              :key="i"
+              :to= "{name: ruta}"
+            >
+            <v-list-item-icon>
+                <v-icon v-text="icon" color="orange"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-title v-text="title"></v-list-item-title>
+  
+              
+            </v-list-item>
       </v-list>
+      
     </v-navigation-drawer>
   <v-app-bar app
-      color="blue"
+      color="white"
       dense
       dark
+      
     >
       <v-img
           lazy-src="https://picsum.photos/id/11/10/6"
@@ -58,7 +129,7 @@
           max-width="50"
           src="@/assets/TuDado.png"
       ></v-img>
-      <v-toolbar-title>TuDado</v-toolbar-title>
+      <v-toolbar-title class="font-weight-black"><span class="black--text">TuDado</span></v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -74,7 +145,7 @@
       color="primary"
       class="mr-5"
     >
-      Servicio
+      Servicios
     </v-btn>
 
       <v-btn
@@ -89,6 +160,7 @@
 
   <!-- Sizes your content based upon application components -->
   <v-main>
+    <h1>Hola</h1>
     <!-- Provides the application the proper gutter -->
     <v-container>
       <!-- If using vue-router -->
@@ -97,8 +169,9 @@
   </v-main>
   
 
-  <v-footer
+  <v-footer app
   dark
+  absolute
   >
     <v-card
       flat
@@ -137,6 +210,8 @@
   export default {
     data: () => ({
       drawer: true,
+      length: 3,
+      onboarding: 0,
       icons: [
         'mdi-facebook',
         'mdi-twitter',
@@ -144,7 +219,8 @@
         'mdi-instagram',
       ],
       items: [
-          { title: 'Inicio', icon: 'mdi-home-city' },
+          [ 'Inicio', 'mdi-home-city', 'Home' ],
+          [ 'Salir', 'mdi-logout','Login' ]
         ],
       mini: true,
     }),
@@ -152,7 +228,22 @@
       entrar(){
         this.$router.push({name: 'Login'});
 
-  }
+      },
+      salir(){
+        this.$store.dispatch('salir');
+        this.$router.push({name: 'Login'})
+
+      },
+      next () {
+        this.onboarding = this.onboarding + 1 === this.length
+          ? 0
+          : this.onboarding + 1
+      },
+      prev () {
+        this.onboarding = this.onboarding - 1 < 0
+          ? this.length - 1
+          : this.onboarding - 1
+      }
     }
   }
 </script>
