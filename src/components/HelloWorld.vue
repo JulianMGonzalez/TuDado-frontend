@@ -28,13 +28,14 @@
           max-width="1200"
           src="@/assets/oficina.jpg"
       ></v-img>
+     
             <v-card-text >
-              <overline
+              <h4
               style="font-size: 2rem;"
               class="white--text"
             >
-              ⠀⠀⠀⠀⠀⠀Hola
-            </overline>
+              ⠀⠀⠀⠀⠀⠀TuDado
+            </h4>
             </v-card-text>
             
           </v-row>
@@ -82,12 +83,13 @@
       v-model="drawer"
       :mini-variant.sync="mini"
       app
+      color="indigo darken-4"
     >
       <v-list-item class="px-2">
         <v-list-item-avatar>
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
         </v-list-item-avatar>
-        <v-list-item-title>Julian Gonzalez</v-list-item-title>
+        <v-list-item-title class="white--text">Julian Gonzalez</v-list-item-title>
         
         <v-btn
           icon
@@ -110,7 +112,7 @@
             <v-list-item-icon>
                 <v-icon v-text="icon" color="orange"></v-icon>
               </v-list-item-icon>
-              <v-list-item-title v-text="title"></v-list-item-title>
+              <v-list-item-title v-text="title" class="white--text"></v-list-item-title>
   
               
             </v-list-item>
@@ -135,14 +137,15 @@
 
       <v-btn
       depressed
-      color="primary"
+      color="indigo darken-4"
       class="mr-5"
     >
-      Inicio
+      <span ></span>  Inicio
+     
     </v-btn>
       <v-btn
       depressed
-      color="primary"
+      color="indigo darken-4"
       class="mr-5"
     >
       Servicios
@@ -150,7 +153,7 @@
 
       <v-btn
       depressed
-      color="primary"
+      color="amber darken-1"
       @click="entrar()"
     >
         Iniciar sesion
@@ -159,8 +162,68 @@
   
 
   <!-- Sizes your content based upon application components -->
-  <v-main>
-    <h1>Hola</h1>
+  <v-main >
+    <v-card
+    
+    max-width="900"
+    max-height="400"
+    tile
+  >
+    <v-img
+      height="400"
+      width="900"
+      src="@/assets/ajedrez.jpg"
+    >
+      <v-row
+        align="end"
+        class="fill-height"
+      >
+        <v-col
+          align-self="start"
+          class="pa-0"
+          cols="12"
+        >
+          <v-avatar
+            class="profile"
+            color="grey"
+            size="250"
+            tile
+          >
+          
+          
+            <v-img src="@/assets/sonriendo.jpg" width="250" height="250"></v-img>
+            <v-list-item-title class="title">
+                Juan Carlos Garcia
+              </v-list-item-title>
+          </v-avatar>
+        </v-col>
+        <v-col class="py-0">
+          <v-list-item
+            color="rgba(0, 0, 0, .4)"
+            dark
+          >
+            <v-list-item-content>
+              <v-list-item-title class="title">
+                Juan Carlos Garcia
+              </v-list-item-title>
+              <v-list-item-subtitle>Neiva, Huila</v-list-item-subtitle>
+              <v-list-item-subtitle>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum magnam neque beatae. Recusandae necessitatibus ab tenetur ducimus dolor officia mollitia fugiat magni minus aliquam nobis natus quisquam, cupiditate quod dolore.</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-col>
+      </v-row>
+    </v-img>
+  </v-card>
+    <v-alert
+      v-model="alert"
+      border="left"
+      close-text="Close Alert"
+      color="indigo darken-4"
+      dark
+      dismissible
+    >
+      /admin para poder entrar en zona administracion!
+    </v-alert>
     <!-- Provides the application the proper gutter -->
     <v-container>
       <!-- If using vue-router -->
@@ -169,14 +232,14 @@
   </v-main>
   
 
-  <v-footer app
-  dark
-  absolute
+  <v-footer
+    dark
+    padless
   >
     <v-card
       flat
       tile
-      class="indigo lighten-1 white--text text-center"
+      class="indigo darken-4 white--text text-center"
     >
       <v-card-text>
         <v-btn
@@ -198,7 +261,8 @@
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+        {{ new Date().getFullYear() }} — <strong>Vuetify</strong><br>
+        <a href="https://github.com/JulianMGonzalez/semana-5-69" class="btn btn-success">GitHub</a>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -212,6 +276,7 @@
       drawer: true,
       length: 3,
       onboarding: 0,
+      alert: true,
       icons: [
         'mdi-facebook',
         'mdi-twitter',
