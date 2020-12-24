@@ -10,7 +10,7 @@
                 <v-card-text>
                     <v-text-field v-model="email" autofocus color="accent" label="Email" required>
                     </v-text-field>
-                    <v-text-field v-model="password" type="password" color="accent" label="Password" required>
+                    <v-text-field v-model="password" type="password" color="accent" label="Password" required v-on:keyup.enter="ingresar()">
                     </v-text-field>
                     <v-flex class="red--text" v-if="errorM">
                         {{errorM}}
@@ -18,6 +18,7 @@
                 </v-card-text>
                 <v-card-actions class="px-3 pb-3">
                     <v-flex text-xs-right>
+
                         <v-btn @click="ingresar()" color="primary">Ingresar</v-btn>
                         <v-divider></v-divider>
                         <v-btn @click="home()" color="error">A Casa!</v-btn>
@@ -30,6 +31,7 @@
 
 </template>
 <script>
+import sawl from 'sweetalert';
 import axios from 'axios';
 export default {
     data(){
@@ -39,9 +41,9 @@ export default {
             errorM:null
         }
     },
-    beforeCreate(){
-      this.$store.dispatch('autoLogin')//? this.$router.push({name: 'Admin'}): false;
-    },
+    // beforeCreate(){
+    //   this.$store.dispatch('autoLogin')//? this.$router.push({name: 'Admin'}): false;
+    // },
     methods:{
         ingresar(){
             axios.post('https://lit-wave-11088.herokuapp.com/api/usuario/login',{email: this.email, password: this.password})
@@ -50,11 +52,13 @@ export default {
                 return respuesta.data;
             })
             .then(data =>{
+                swal("Buen Trabajo!", "Ingresando...", "success");
                 this.$store.dispatch("guardarToken",data.tokenReturn);
                 this.$router.push({name: 'Home'});
             })
             .catch(error =>{
                 //console.log(eror);
+                swal("Error!", 'credenciales son incorrectas', "error");
                 this.errorM=null;
                 console.log(error.response.status);
                 if (error.response.status==401){
@@ -62,9 +66,11 @@ export default {
                     this.errorM='credenciales son incorrectas.';
                 } 
                 else if (error.response.status==404){
+                    swal("Error!", 'el usuario no existe', "error");
                     this.errorM='el usuario no existe';
                 }
                 else{
+                    swal("Error!", 'Ocurrió un error con el servidor.', "error");
                     this.errorM='Ocurrió un error con el servidor.';
                 }
             });

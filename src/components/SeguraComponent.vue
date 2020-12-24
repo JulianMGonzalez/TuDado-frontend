@@ -101,24 +101,13 @@
       </v-list>
     </v-card>
     </v-navigation-drawer>
-    <template>
   <v-item-group mandatory>
     <v-sheet
       class="overflow-y-auto"
       max-height="600"
       tile
     >
-      <v-item
-        v-for="[
-          c,
-          text,
-          size,
-          weight,
-          spacing,
-          margin
-        ] in classes"
-        :key="c"
-      >
+      
         <template v-slot:default="{ active, toggle }">
           <v-sheet
             :color="active ? $vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4' : undefined"
@@ -187,16 +176,15 @@
             </v-expand-transition>
           </v-sheet>
         </template>
-      </v-item>
     </v-sheet>
   </v-item-group>
-    </template>
 
 
     <v-main class="grey lighten-5">
       <v-container>
-        <h1>Hola</h1>
+        
         <router-view/>
+        <h1>Hola</h1>
       </v-container>
     </v-main>
   </v-app>

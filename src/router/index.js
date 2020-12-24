@@ -32,7 +32,21 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: {
+      public: true
+    }
+  },
+  {
+    path: '/servicio',
+    name: 'Servicio',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Servicio.vue'),
+    meta: {
+      public: true
+    }
   },
   {
     path: '/admin',
@@ -95,9 +109,15 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.public)) {
       next();
   } else if (to.matched.some(record => record.meta.auth)) {
+      if (store.state.usuario && store.state.usuario.rol === 'Administrador') {
+          console.log("puedes pasar");
           next();
-      
+      }else{
+        swal("Error!", 'credenciales son incorrectas', "error");
+        next({ name: 'Home' });
+      }
   } else {
+    console.log("Inicia sesion");
       next({ name: 'Login' });
   }
 })
