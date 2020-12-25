@@ -22,7 +22,6 @@ export default new Vuex.Store({
         guardarToken({ commit }, token) {
             commit("setToken", token)
             commit("setUsuario", decode(token))
-            localStorage.setItem("token", token)
         },
         autoLogin({ commit }) {
             let token = localStorage.getItem("token");

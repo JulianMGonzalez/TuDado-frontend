@@ -57,9 +57,12 @@
         <v-list-item-avatar>
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
         </v-list-item-avatar>
-        <v-list-item-title class="white--text"
-          >Julian Gonzalez</v-list-item-title
-        >
+        <v-list-item-title class="white--text">
+          <br>
+          Hola, {{ user.nombre }}!<br>
+           <p>{{ user.rol }}</p>
+        </v-list-item-title>
+        
 
         <v-btn icon @click.stop="mini = !mini" color="orange">
           <v-icon>mdi-chevron-left</v-icon>
@@ -179,6 +182,7 @@
       >
         Para entrar en zona de administracion dale en Geston!
       </v-alert>
+
       <!-- Provides the application the proper gutter -->
       <v-container>
         <!-- If using vue-router -->
@@ -186,7 +190,7 @@
       </v-container>
     </v-main>
 
-    <v-footer dark padless>
+    <v-footer dark padless class="d-flex justify-center">
       <v-card flat tile class="indigo darken-4 white--text text-center">
         <v-card-text>
           <v-btn
@@ -202,16 +206,60 @@
           </v-btn>
         </v-card-text>
 
-        <v-card-text class="white--text pt-0">
+        <v-card-text class="white--text pt-0" v-if="this.$store.state.usuario">
+          <div class="container p-4">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <v-img
+        lazy-src="https://picsum.photos/id/11/10/6"
+        max-height="50"
+        max-width="50"
+        src="@/assets/TuDado.png"
+      ></v-img>
+        <h5 class="text-uppercase">TuDado</h5>
+
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+          molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+          aliquam voluptatem veniam, est atque cumque eum delectus sint!
+        </p>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <v-img
+        lazy-src="https://picsum.photos/id/11/10/6"
+        max-height="50"
+        max-width="50"
+        src="@/assets/TuDado.png"
+      ></v-img>
+        <h5 class="text-uppercase">Contacto</h5>
+
+        <p>
+          Nmeros
+          lugares
+          correos
+          
+        </p>
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+        </v-card-text>
+        <v-card-text class="white--text pt-0" v-else>
           Las personas transcurren la gran parte del día en sus en sus trabajos,
           donde se enfrentan frecuentemente a diversos tipos de problemáticas,
-          en este escenario los inconvenientes abundan. Por eso, las habilidades
+          en este escenario los inconvenientes abundan. <br >Por eso, las habilidades
           blandas han adquirido gran importancia y valor en el mundo de los
           negocios, ya que sirven para resolver inconvenientes y enfrentar de
-          manera correcta la jornada laboral. Julian David Montero <br />
-          Monterogjulian@gmail.com <br />
-          Tel: 323 2477487 <br />
-          _____________________ <br />
+          manera correcta la jornada laboral. <br >
+          Julian David Montero <br >
+          Monterogjulian@gmail.com <br >
+          Tel: 323 2477487 <br>
         </v-card-text>
 
         <v-divider></v-divider>
@@ -241,6 +289,12 @@ export default {
     mini: true,
   }),
   methods: {
+    getUserDetails() {
+      let user = localStorage.getItem("user");
+      if(user){
+        this.user = JSON.parse(user);
+      }
+    },
     entrar() {
       this.$router.push({ name: "Login" });
     },
@@ -274,6 +328,9 @@ export default {
       this.onboarding =
         this.onboarding - 1 < 0 ? this.length - 1 : this.onboarding - 1;
     },
+  },
+  created() {
+    this.getUserDetails();
   },
 };
 </script>

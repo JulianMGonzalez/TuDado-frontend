@@ -49,6 +49,8 @@ export default {
             axios.post('https://lit-wave-11088.herokuapp.com/api/usuario/login',{email: this.email, password: this.password})
             .then(respuesta =>{
                  console.log(respuesta.data);
+                 let user = respuesta.data.user;
+                localStorage.setItem("user", JSON.stringify(user));
                 return respuesta.data;
             })
             .then(data =>{
