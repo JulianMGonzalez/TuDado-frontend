@@ -62,7 +62,6 @@ export default {
                 this.errorM=null;
                 console.log(error.response.status);
                 if (error.response.status==401){
-                    console.log('hola');
                     this.errorM='credenciales son incorrectas.';
                 } 
                 else if (error.response.status==404){

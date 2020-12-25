@@ -83,7 +83,7 @@
             >Salir</v-list-item-title
           >
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="this.$store.state.usuario.rol ==='Administrador' || this.$store.state.usuario.rol ==='Vendedor'">
           <v-list-item-icon>
             <v-icon color="orange" @click="admin()">mdi-alert-minus</v-icon>
           </v-list-item-icon>
