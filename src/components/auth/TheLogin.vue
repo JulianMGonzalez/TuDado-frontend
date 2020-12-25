@@ -42,8 +42,8 @@ export default {
         }
     },
     // beforeCreate(){
-    //   this.$store.dispatch('autoLogin')//? this.$router.push({name: 'Admin'}): false;
-    // },
+    //   this.$store.dispatch('autoLogin')? this.$router.push({name: 'Admin'}): false;
+    //  },
     methods:{
         ingresar(){
             axios.post('https://lit-wave-11088.herokuapp.com/api/usuario/login',{email: this.email, password: this.password})

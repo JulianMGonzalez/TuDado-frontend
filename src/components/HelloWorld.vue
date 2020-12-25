@@ -51,6 +51,7 @@
       :mini-variant.sync="mini"
       app
       color="indigo darken-4"
+      v-if="this.$store.state.usuario"
     >
       <v-list-item class="px-2">
         <v-list-item-avatar>
@@ -60,14 +61,14 @@
           >Julian Gonzalez</v-list-item-title
         >
 
-        <v-btn icon @click.stop="mini = !mini">
+        <v-btn icon @click.stop="mini = !mini" color="orange">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
       </v-list-item>
 
       <v-divider></v-divider>
 
-      <v-list dense>
+      <v-list dense >
         <v-list-item>
           <v-list-item-icon>
             <v-icon color="orange">mdi-home-city</v-icon>
@@ -123,7 +124,7 @@
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
-    <v-main>
+    <v-main class="bg-dark">
       <v-alert border="bottom" colored-border type="warning" elevation="2">
         Nos Centramos en el sector cultural. Si bien estas competencias son
         innatas, todos tenemos la capacidad de poder desarrollarlas. Por ello,
@@ -193,6 +194,7 @@
             :key="icon"
             class="mx-4 white--text"
             icon
+            color="orange"
           >
             <v-icon size="24px">
               {{ icon }}
@@ -243,13 +245,26 @@ export default {
       this.$router.push({ name: "Login" });
     },
     admin() {
-      this.$router.push({ name: "Admin" });
+      try {
+        if (this.$store.state.usuario.rol === 'Administrador' || this.$store.state.usuario.rol === 'Vendedor'){
+            this.$router.push({ name: "Admin" });
+        }
+      
+      else{
+        swal("Error!", 'Error', "error");
+        
+      }
+      } catch (error) {
+          console.log(error)
+      }
+      
     },
     servicio() {
       this.$router.push({ name: "Servicio" });
     },
     salir() {
       this.$store.dispatch("salir");
+      this.$router.push({ name: "Login" });
     },
     next() {
       this.onboarding =

@@ -2,19 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store'
+import swal from 'sweetalert'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta: {
-      public: true
-    }
-  },
-
   {
     path: '/login',
     name: 'Login',
@@ -26,6 +18,15 @@ const routes = [
       public: true
     }
   },
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+    meta: {
+      public: true
+    }
+  },
+
   {
     path: '/about',
     name: 'About',
@@ -69,7 +70,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "categoria" */ '../views/Categoria.vue'),
         meta: {
           auth: true,
-          administrador: true
+          administrador: true,
+          vendedor: false
         }
       },
       {
@@ -81,7 +83,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "articulo" */ '../views/Articulo.vue'),
         meta: {
           auth: true,
-          administrador: true
+          administrador: true,
+          vendedor: true
         }
       },
       {
@@ -93,10 +96,12 @@ const routes = [
         component: () => import(/* webpackChunkName: "usuario" */ '../views/Usuario.vue'),
         meta: {
           auth: true,
-          administrador: true
+          administrador: true,
+          vendedor: false
         }
       }
-]},
+    ]
+  },
 ]
 
 const router = new VueRouter({
@@ -107,18 +112,21 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.public)) {
-      next();
+    next();
   } else if (to.matched.some(record => record.meta.auth)) {
-      if (store.state.usuario && store.state.usuario.rol === 'Administrador') {
-          console.log("puedes pasar");
-          next();
-      }else{
-        swal("Error!", 'credenciales son incorrectas', "error");
-        next({ name: 'Home' });
-      }
+    if (store.state.usuario && store.state.usuario.rol === 'Administrador') {
+      next();
+    }else if(store.state.usuario && store.state.usuario.rol === 'Vendedor'){
+      next();
+    }
+    else {
+      swal("Error!", 'No tienes permisos', "error");
+      router.push({ name: 'Home' });
+
+    }
   } else {
-    console.log("Inicia sesion");
-      next({ name: 'Login' });
+    console.log("permisos pero sin metas")
+    next()
   }
 })
 

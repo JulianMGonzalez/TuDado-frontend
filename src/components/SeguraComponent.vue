@@ -54,7 +54,6 @@
         </v-list-item>
   
         <v-list-group
-          :value="true"
           prepend-icon="mdi-account-circle"
         >
           
@@ -79,8 +78,9 @@
   
           <v-list-group                         
             prepend-icon="mdi-account-circle"
+            v-if="this.$store.state.usuario.rol === 'Administrador'"
           >
-            <template v-slot:activator>
+            <template v-slot:activator v->
               <v-list-item-content>
                 <v-list-item-title>Usuario</v-list-item-title>
               </v-list-item-content>
@@ -217,6 +217,7 @@ export default {
   methods:{
     salir(){
     this.$store.dispatch('salir');
+    this.$router.push({ name: "Login" });
 
   }
   }

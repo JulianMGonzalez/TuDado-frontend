@@ -7,6 +7,7 @@
       :mini-variant.sync="mini"
       app
       color="indigo darken-4"
+      v-if="this.$store.state.usuario"
     >
       <v-list-item class="px-2">
         <v-list-item-avatar>
@@ -64,9 +65,9 @@
       depressed
       color="indigo darken-4"
       class="ml-2"
-      @click="servicio()"
+      @click="inicio()"
     >
-      Servicios
+      Inicio
     </v-btn>
 
       <v-btn
@@ -114,6 +115,10 @@ export default {
         },
         salir() {
             this.$store.dispatch("salir");
+        },
+        inicio(){
+            this.$router.push({name: 'Home'});
+
         },
 
     }
