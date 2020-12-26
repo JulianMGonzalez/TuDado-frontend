@@ -2,48 +2,25 @@
   <!-- App.vue -->
   <v-app>
     <v-banner elevation="7" class="mt-12">
-      <v-card dark flat tile>
-        <v-window v-model="onboarding">
-          <v-window-item v-for="n in length" :key="`card-${n}`">
-            <v-card height="300">
-              <v-row class="fill-height" align="center" justify="center">
-                <v-img
-                  lazy-src="https://picsum.photos/id/11/10/6"
-                  max-height="300"
-                  max-width="1200"
-                  src="@/assets/oficina.jpg"
-                ></v-img>
-
-                <v-card-text>
-                  <h4 style="font-size: 2rem" class="white--text">
-                    ⠀⠀⠀⠀⠀⠀TuDado
-                  </h4>
-                </v-card-text>
-              </v-row>
-            </v-card>
-          </v-window-item>
-        </v-window>
-
-        <v-card-actions class="justify-space-between">
-          <v-btn text @click="prev">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-item-group v-model="onboarding" class="text-center" mandatory>
-            <v-item
-              v-for="n in length"
-              :key="`btn-${n}`"
-              v-slot="{ active, toggle }"
-            >
-              <v-btn :input-value="active" icon @click="toggle">
-                <v-icon>mdi-record</v-icon>
-              </v-btn>
-            </v-item>
-          </v-item-group>
-          <v-btn text @click="next">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+      <v-carousel cycle show-arrows-on-hover hide-delimiters height="400">
+    <v-carousel-item
+      v-for="(item, i) in imagenes"
+      :key="i"
+      :src="item.src"
+      reverse-transition="fade-transition"
+      transition="fade-transition"
+    >
+        <v-row
+          class=" d-flex align-end"
+          align="center"
+          justify="center"
+        >
+          <div class="display-3 font-weight-black" v-text="item.p">
+              
+          </div>
+        </v-row>
+    </v-carousel-item>
+  </v-carousel>
     </v-banner>
 <v-navigation-drawer
       v-model="drawer"
@@ -98,7 +75,7 @@
       
     </v-navigation-drawer>
     
-    <v-app-bar app color="white" dense dark>
+    <v-app-bar app color="orange" dense dark>
       
       <v-img
         lazy-src="https://picsum.photos/id/11/10/6"
@@ -107,7 +84,7 @@
         src="@/assets/TuDado.png"
       ></v-img>
       <v-toolbar-title class="font-weight-black"
-        ><span class="black--text">TuDado</span></v-toolbar-title
+        ><span class="#051C9E--text">TuDado</span></v-toolbar-title
       >
 
       <v-spacer></v-spacer>
@@ -117,7 +94,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on: tooltip }">
             <v-btn
-              color="orange"
+              color="indigo darken-4"
               dark
               v-bind="attrs"
               v-on="{ ...tooltip, ...menu }"
@@ -314,7 +291,20 @@
 
 export default {
   data: () => ({
-    
+    imagenes: [
+          {
+            src: 'https://pixabay.com/get/57e5d5414d52aa14f6da8c7dda3536781536dee45055734e_1280.jpg', p: 'TuDado'
+          },
+          {
+            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', p: ''
+          },
+          {
+            src: 'https://pixabay.com/get/57e8d1454252ab14f6da8c7dda3536781536dee450597848_1280.jpg', p: 'Desarrolla tus habilidades blandas'
+          },
+          {
+            src: 'https://pixabay.com/get/57e2d54a4c55a414f6da8c7dda3536781536dee45751744d_1280.jpg', p: 'Hola4'
+          },
+        ],
     drawer: true,
     length: 3,
     onboarding: 0,
