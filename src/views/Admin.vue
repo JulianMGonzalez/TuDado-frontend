@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SeguraComponent from '../components/SeguraComponent.vue'
+import SeguraComponent from '../components/auth/SeguraComponent'
 export default {
   components: { SeguraComponent },
     

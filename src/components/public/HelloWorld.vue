@@ -45,8 +45,7 @@
         </v-card-actions>
       </v-card>
     </v-banner>
-
-    <v-navigation-drawer
+<v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
       app
@@ -96,8 +95,11 @@
         </v-list-item>
 
       </v-list>
+      
     </v-navigation-drawer>
+    
     <v-app-bar app color="white" dense dark>
+      
       <v-img
         lazy-src="https://picsum.photos/id/11/10/6"
         max-height="50"
@@ -110,20 +112,51 @@
 
       <v-spacer></v-spacer>
 
-      
-      <v-btn depressed color="indigo darken-4" class="ml-2" @click="servicio()">
+      <v-menu>
+      <template v-slot:activator="{ on: menu, attrs }">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on: tooltip }">
+            <v-btn
+              color="orange"
+              dark
+              v-bind="attrs"
+              v-on="{ ...tooltip, ...menu }"
+            >
+              <v-icon>
+                mdi-microsoft-xbox-controller-menu
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Menu</span>
+        </v-tooltip>
+      </template>
+      <v-list>
+        <v-list-item>
+          
+          <v-btn depressed color="indigo darken-4" class="ml-2 text-white" elevation="4" @click="servicio()">
         Servicios
       </v-btn>
-
+        </v-list-item>
+        <v-list-item>
+          
+          <v-btn depressed color="indigo darken-4" class="ml-2 text-white" elevation="4" @click="blog()">
+        Blog
+      </v-btn>
+        </v-list-item>
+      <v-list-item>
       <v-btn
         v-if="!this.$store.state.usuario"
         depressed
         color="amber darken-1"
         class="ml-2"
+        elevation="4"
         @click="entrar()"
         >Inicia Sesion</v-btn
       >
-      <v-btn v-else depressed color="amber darken-1" class="ml-2" @click="salir()">Salir</v-btn>
+      <v-btn v-else depressed color="amber darken-1" class="ml-2" elevation="4" @click="salir()">Salir</v-btn>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -281,6 +314,7 @@
 
 export default {
   data: () => ({
+    
     drawer: true,
     length: 3,
     onboarding: 0,
@@ -315,6 +349,9 @@ export default {
     },
     servicio() {
       this.$router.push({ name: "Servicio" });
+    },
+    blog() {
+      this.$router.push({ name: "Blog" });
     },
     salir() {
       this.$store.dispatch("salir");
