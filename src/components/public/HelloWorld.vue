@@ -315,7 +315,7 @@ export default {
     imagenes: [
       {
         src:
-          "https://pixabay.com/get/57e5d5414d52aa14f6da8c7dda3536781536dee45055734e_1280.jpg",
+          "https://cdn.pixabay.com/photo/2016/07/07/16/46/roll-the-dice-1502706_960_720.jpg",
         p: "TuDado",
       },
       {
@@ -324,13 +324,13 @@ export default {
       },
       {
         src:
-          "https://pixabay.com/get/57e8d1454252ab14f6da8c7dda3536781536dee450597848_1280.jpg",
-        p: "Desarrolla tus habilidades blandas",
+          "https://cdn.pixabay.com/photo/2016/02/19/11/23/women-1209678_960_720.jpg",
+        p: "",
       },
       {
         src:
-          "https://pixabay.com/get/57e2d54a4c55a414f6da8c7dda3536781536dee45751744d_1280.jpg",
-        p: "Hola4",
+          "https://cdn.pixabay.com/photo/2016/11/21/17/50/battle-1846807_960_720.jpg",
+        p: "Desarrolla tus habilidades blandas",
       },
     ],
     drawer: true,
