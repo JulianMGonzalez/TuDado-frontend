@@ -268,7 +268,11 @@ export default {
             "estado": 0,
             "password": this.editedItem.password,
             "rol": this.editedItem.rol,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -284,7 +288,11 @@ export default {
             "estado": 0,
             "password": this.editedItem.password,
             "rol": this.editedItem.rol,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
