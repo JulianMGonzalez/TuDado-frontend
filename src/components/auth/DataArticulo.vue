@@ -212,7 +212,11 @@ export default {
   methods: {
     list() {
       axios
-        .get("https://lit-wave-11088.herokuapp.com/api/articulo/list")
+        .get("http://localhost:3000/api/articulo/list", {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
         .then((response) => {
           this.articulos = response.data;
           this.cargando = false;
@@ -223,7 +227,7 @@ export default {
     },
     listCategoria() {
       axios
-        .get("https://lit-wave-11088.herokuapp.com/api/categoria/list", {
+        .get("http://localhost:3000/api/categoria/list", {
           headers: {
             token: this.$store.state.token
           }
@@ -252,7 +256,7 @@ export default {
     deleteItemConfirm() {
       if (this.editedItem.estado === 1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/articulo/deactivate", {
+          .put("http://localhost:3000/api/articulo/deactivate", {
             id: this.editedItem.id,
           }, {
           headers: {
@@ -267,7 +271,7 @@ export default {
           });
       } else {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/articulo/activate", {
+          .put("http://localhost:3000/api/articulo/activate", {
             id: this.editedItem.id,
           }, {
           headers: {
@@ -304,12 +308,12 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-          .put("https://lit-wave-11088.herokuapp.com/api/articulo/update", {
-            "id": this.editedItem.id,
-            "nombre": this.editedItem.nombre,
-            "descripcion": this.editedItem.descripcion,
-            "codigo": this.editedItem.codigo,
-            "categoria": this.categoria.id
+          .put("http://localhost:3000/api/articulo/update", {
+            id: this.editedItem.id,
+            nombre: this.editedItem.nombre,
+            descripcion: this.editedItem.descripcion,
+            codigo: this.editedItem.codigo,
+            categoria: this.categoria.id
           }, {
           headers: {
             token: this.$store.state.token
@@ -323,13 +327,13 @@ export default {
           });
       } else {
         axios
-          .post("http://https://lit-wave-11088.herokuapp.com/api/articulo/add", {
-            "estado": 1,
-            "id": this.editedItem.id,
-            "nombre": this.editedItem.nombre,
-            "descripcion": this.editedItem.descripcion,
-            "codigo": this.editedItem.codigo,
-            "categoriaId": this.categoria.id
+          .post("http://localhost:3000/api/articulo/add", {
+            estado: 1,
+            id: this.editedItem.id,
+            nombre: this.editedItem.nombre,
+            descripcion: this.editedItem.descripcion,
+            codigo: this.editedItem.codigo,
+            categoriaId: this.categoria.id
           }, {
           headers: {
             token: this.$store.state.token
