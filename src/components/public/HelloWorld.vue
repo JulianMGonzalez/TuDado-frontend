@@ -3,26 +3,20 @@
   <v-app>
     <v-banner elevation="7" class="mt-12">
       <v-carousel cycle show-arrows-on-hover hide-delimiters height="400">
-    <v-carousel-item
-      v-for="(item, i) in imagenes"
-      :key="i"
-      :src="item.src"
-      reverse-transition="fade-transition"
-      transition="fade-transition"
-    >
-        <v-row
-          class=" d-flex align-end"
-          align="center"
-          justify="center"
+        <v-carousel-item
+          v-for="(item, i) in imagenes"
+          :key="i"
+          :src="item.src"
+          reverse-transition="fade-transition"
+          transition="fade-transition"
         >
-          <div class="display-3 font-weight-black" v-text="item.p">
-              
-          </div>
-        </v-row>
-    </v-carousel-item>
-  </v-carousel>
+          <v-row class="d-flex align-end" align="center" justify="center">
+            <div class="display-3 font-weight-black" v-text="item.p"></div>
+          </v-row>
+        </v-carousel-item>
+      </v-carousel>
     </v-banner>
-<v-navigation-drawer
+    <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
       app
@@ -34,11 +28,10 @@
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
         </v-list-item-avatar>
         <v-list-item-title class="white--text">
-          <br>
-          Hola, {{ user.nombre }}!<br>
-           <p>{{ user.rol }}</p>
+          <br />
+          Hola, {{ user.nombre }}!<br />
+          <p>{{ user.rol }}</p>
         </v-list-item-title>
-        
 
         <v-btn icon @click.stop="mini = !mini" color="orange">
           <v-icon>mdi-chevron-left</v-icon>
@@ -47,7 +40,7 @@
 
       <v-divider></v-divider>
 
-      <v-list dense >
+      <v-list dense>
         <v-list-item>
           <v-list-item-icon>
             <v-icon color="orange">mdi-home-city</v-icon>
@@ -62,7 +55,12 @@
             >Salir</v-list-item-title
           >
         </v-list-item>
-        <v-list-item v-if="this.$store.state.usuario.rol ==='Administrador' || this.$store.state.usuario.rol ==='Vendedor'">
+        <v-list-item
+          v-if="
+            this.$store.state.usuario.rol === 'Administrador' ||
+            this.$store.state.usuario.rol === 'Vendedor'
+          "
+        >
           <v-list-item-icon>
             <v-icon color="orange" @click="admin()">mdi-alert-minus</v-icon>
           </v-list-item-icon>
@@ -70,13 +68,10 @@
             >Gestion</v-list-item-title
           >
         </v-list-item>
-
       </v-list>
-      
     </v-navigation-drawer>
-    
+
     <v-app-bar app color="orange" dense dark>
-      
       <v-img
         lazy-src="https://picsum.photos/id/11/10/6"
         max-height="50"
@@ -90,50 +85,81 @@
       <v-spacer></v-spacer>
 
       <v-menu>
-      <template v-slot:activator="{ on: menu, attrs }">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on: tooltip }">
+        <template v-slot:activator="{ on: menu, attrs }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn
+                color="indigo darken-4"
+                dark
+                v-bind="attrs"
+                v-on="{ ...tooltip, ...menu }"
+              >
+                <v-icon> mdi-microsoft-xbox-controller-menu </v-icon>
+              </v-btn>
+            </template>
+            <span>Menu</span>
+          </v-tooltip>
+        </template>
+        <v-list>
+          <v-list-item>
             <v-btn
+              depressed
               color="indigo darken-4"
-              dark
-              v-bind="attrs"
-              v-on="{ ...tooltip, ...menu }"
+              class="ml-2 text-white"
+              elevation="4"
+              @click="servicio()"
             >
-              <v-icon>
-                mdi-microsoft-xbox-controller-menu
-              </v-icon>
+              Servicios
             </v-btn>
-          </template>
-          <span>Menu</span>
-        </v-tooltip>
-      </template>
-      <v-list>
-        <v-list-item>
+          </v-list-item>
+          <v-list-item>
+            <v-btn
+              depressed
+              color="indigo darken-4"
+              class="ml-2 text-white"
+              elevation="4"
+              @click="blog()"
+            >
+              Blog
+            </v-btn>
+          </v-list-item>
+          <v-list-item>
+            <v-btn
+              v-if="!this.$store.state.usuario"
+              depressed
+              color="amber darken-1"
+              class="ml-2"
+              elevation="4"
+              @click="entrar()"
+              >Inicia Sesion</v-btn
+            >
+            <v-btn
+              v-else
+              depressed
+              color="amber darken-1"
+              class="ml-2"
+              elevation="4"
+              @click="salir()"
+              >Salir</v-btn
+            >
+          </v-list-item>
+          <v-list-item>
+            <v-btn
+              v-if="!this.$store.state.usuario"
+              depressed
+              color="indigo darken-4"
+              class="ml-2 text-white"
+              elevation="4"
+              @click="registrar()"
+            >
+              Registrate
+            </v-btn>
+            <v-btn v-else loading class="ml-2 text-white" color="indigo darken-4"></v-btn>
+            
           
-          <v-btn depressed color="indigo darken-4" class="ml-2 text-white" elevation="4" @click="servicio()">
-        Servicios
-      </v-btn>
-        </v-list-item>
-        <v-list-item>
-          
-          <v-btn depressed color="indigo darken-4" class="ml-2 text-white" elevation="4" @click="blog()">
-        Blog
-      </v-btn>
-        </v-list-item>
-      <v-list-item>
-      <v-btn
-        v-if="!this.$store.state.usuario"
-        depressed
-        color="amber darken-1"
-        class="ml-2"
-        elevation="4"
-        @click="entrar()"
-        >Inicia Sesion</v-btn
-      >
-      <v-btn v-else depressed color="amber darken-1" class="ml-2" elevation="4" @click="salir()">Salir</v-btn>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -218,58 +244,54 @@
 
         <v-card-text class="white--text pt-0" v-if="this.$store.state.usuario">
           <div class="container p-4">
-    <!--Grid row-->
-    <div class="row">
-      <!--Grid column-->
-      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <v-img
-        lazy-src="https://picsum.photos/id/11/10/6"
-        max-height="50"
-        max-width="50"
-        src="@/assets/TuDado.png"
-      ></v-img>
-        <h5 class="text-uppercase">TuDado</h5>
+            <!--Grid row-->
+            <div class="row">
+              <!--Grid column-->
+              <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <v-img
+                  lazy-src="https://picsum.photos/id/11/10/6"
+                  max-height="50"
+                  max-width="50"
+                  src="@/assets/TuDado.png"
+                ></v-img>
+                <h5 class="text-uppercase">TuDado</h5>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
-          molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
-          aliquam voluptatem veniam, est atque cumque eum delectus sint!
-        </p>
-      </div>
-      <!--Grid column-->
+                <p>
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
+                  atque ea quis molestias. Fugiat pariatur maxime quis culpa
+                  corporis vitae repudiandae aliquam voluptatem veniam, est
+                  atque cumque eum delectus sint!
+                </p>
+              </div>
+              <!--Grid column-->
 
-      <!--Grid column-->
-      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <v-img
-        lazy-src="https://picsum.photos/id/11/10/6"
-        max-height="50"
-        max-width="50"
-        src="@/assets/TuDado.png"
-      ></v-img>
-        <h5 class="text-uppercase">Contacto</h5>
+              <!--Grid column-->
+              <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <v-img
+                  lazy-src="https://picsum.photos/id/11/10/6"
+                  max-height="50"
+                  max-width="50"
+                  src="@/assets/TuDado.png"
+                ></v-img>
+                <h5 class="text-uppercase">Contacto</h5>
 
-        <p>
-          Nmeros
-          lugares
-          correos
-          
-        </p>
-      </div>
-      <!--Grid column-->
-    </div>
-    <!--Grid row-->
-  </div>
+                <p>Nmeros lugares correos</p>
+              </div>
+              <!--Grid column-->
+            </div>
+            <!--Grid row-->
+          </div>
         </v-card-text>
         <v-card-text class="white--text pt-0" v-else>
           Las personas transcurren la gran parte del día en sus en sus trabajos,
           donde se enfrentan frecuentemente a diversos tipos de problemáticas,
-          en este escenario los inconvenientes abundan. <br >Por eso, las habilidades
-          blandas han adquirido gran importancia y valor en el mundo de los
-          negocios, ya que sirven para resolver inconvenientes y enfrentar de
-          manera correcta la jornada laboral. <br >
-          Julian David Montero <br >
-          Monterogjulian@gmail.com <br >
-          Tel: 323 2477487 <br>
+          en este escenario los inconvenientes abundan. <br />Por eso, las
+          habilidades blandas han adquirido gran importancia y valor en el mundo
+          de los negocios, ya que sirven para resolver inconvenientes y
+          enfrentar de manera correcta la jornada laboral. <br />
+          Julian David Montero <br />
+          Monterogjulian@gmail.com <br />
+          Tel: 323 2477487 <br />
         </v-card-text>
 
         <v-divider></v-divider>
@@ -288,23 +310,29 @@
 </template>
 
 <script>
-
 export default {
   data: () => ({
     imagenes: [
-          {
-            src: 'https://pixabay.com/get/57e5d5414d52aa14f6da8c7dda3536781536dee45055734e_1280.jpg', p: 'TuDado'
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', p: ''
-          },
-          {
-            src: 'https://pixabay.com/get/57e8d1454252ab14f6da8c7dda3536781536dee450597848_1280.jpg', p: 'Desarrolla tus habilidades blandas'
-          },
-          {
-            src: 'https://pixabay.com/get/57e2d54a4c55a414f6da8c7dda3536781536dee45751744d_1280.jpg', p: 'Hola4'
-          },
-        ],
+      {
+        src:
+          "https://pixabay.com/get/57e5d5414d52aa14f6da8c7dda3536781536dee45055734e_1280.jpg",
+        p: "TuDado",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        p: "",
+      },
+      {
+        src:
+          "https://pixabay.com/get/57e8d1454252ab14f6da8c7dda3536781536dee450597848_1280.jpg",
+        p: "Desarrolla tus habilidades blandas",
+      },
+      {
+        src:
+          "https://pixabay.com/get/57e2d54a4c55a414f6da8c7dda3536781536dee45751744d_1280.jpg",
+        p: "Hola4",
+      },
+    ],
     drawer: true,
     length: 3,
     onboarding: 0,
@@ -315,7 +343,7 @@ export default {
   methods: {
     getUserDetails() {
       let user = localStorage.getItem("user");
-      if(user){
+      if (user) {
         this.user = JSON.parse(user);
       }
     },
@@ -324,24 +352,26 @@ export default {
     },
     admin() {
       try {
-        if (this.$store.state.usuario.rol === 'Administrador' || this.$store.state.usuario.rol === 'Vendedor'){
-            this.$router.push({ name: "Admin" });
+        if (
+          this.$store.state.usuario.rol === "Administrador" ||
+          this.$store.state.usuario.rol === "Vendedor"
+        ) {
+          this.$router.push({ name: "Admin" });
+        } else {
+          swal("Error!", "Error", "error");
         }
-      
-      else{
-        swal("Error!", 'Error', "error");
-        
-      }
       } catch (error) {
-          console.log(error)
+        console.log(error);
       }
-      
     },
     servicio() {
       this.$router.push({ name: "Servicio" });
     },
     blog() {
       this.$router.push({ name: "Blog" });
+    },
+    registrar() {
+      this.$router.push({ name: "Registrar" });
     },
     salir() {
       this.$store.dispatch("salir");
