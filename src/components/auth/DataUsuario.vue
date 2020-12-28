@@ -169,7 +169,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "Agregar categoria" : "Editar categoria";
+      return this.editedIndex === -1 ? "Agregar usuario" : "Editar usuario";
     },
   },
 
@@ -220,7 +220,11 @@ export default {
         axios
           .put("http://localhost:3000/api/usuario/deactivate", {
             id: this.editedItem.id,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -231,7 +235,11 @@ export default {
         axios
           .put("http://localhost:3000/api/usuario/activate", {
             id: this.editedItem.id,
-          })
+          }, {
+          headers: {
+            token: this.$store.state.token
+          }
+        })
           .then((response) => {
             this.list();
           })
@@ -262,12 +270,11 @@ export default {
       if (this.editedIndex > -1) {
         axios
           .put("http://localhost:3000/api/usuario/update", {
-            "id": this.editedItem.id,
-            "nombre": this.editedItem.nombre,
-            "email": this.editedItem.email,
-            "estado": 0,
-            "password": this.editedItem.password,
-            "rol": this.editedItem.rol,
+            id: this.editedItem.id,
+            nombre: this.editedItem.nombre,
+            email: this.editedItem.email,
+            password: this.editedItem.password,
+            rol: this.editedItem.rol,
           }, {
           headers: {
             token: this.$store.state.token
@@ -282,12 +289,12 @@ export default {
       } else {
         axios
           .post("http://localhost:3000/api/usuario/add", {
-            "id": this.editedItem.id,
-            "nombre": this.editedItem.nombre,
-            "email": this.editedItem.email,
-            "estado": 0,
-            "password": this.editedItem.password,
-            "rol": this.editedItem.rol,
+            estado: 1,
+            id: this.editedItem.id,
+            nombre: this.editedItem.nombre,
+            email: this.editedItem.email,
+            password: this.editedItem.password,
+            rol: this.editedItem.rol,
           }, {
           headers: {
             token: this.$store.state.token
