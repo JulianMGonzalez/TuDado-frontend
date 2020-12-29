@@ -87,97 +87,154 @@
       </v-menu>
     </v-app-bar>
     <main app>
- <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md6 lg5 x14>
-        <v-card>
-        <div class="mt-13">
-          <div class="d-flex justify-content-center align-items-center">
-          <img src="@/assets/TuDado.png" width="150" height="150" alt="" />
-          <h1 class="font-weight-black text-danger" >TuDado</h1>
-          
-        </div>
-        <h1 class="alert alert-secundary mt-5 ml-15">¡Unete a TuDado!</h1>
-        
-          <form>
-            <v-text-field
-              v-model="name"
-              :error-messages="nameErrors"
-              :counter="20"
-              label="Nombre"
-              required
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
-              class="ml-6 mr-6"
-            ></v-text-field>
-            <v-text-field
-              v-model="email"
-              :error-messages="emailErrors"
-              label="E-mail"
-              required
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
-              class="ml-6 mr-6"
-            ></v-text-field>
-            <v-text-field
-              v-model="contraseña"
-              :error-messages="contraseñaErrors"
-              type="password"
-              label="Contraseña"
-              required
-              @input="$v.contraseña.$touch()"
-              @blur="$v.contraseña.$touch()"
-              class="ml-6 mr-6"
-            ></v-text-field>
-            <v-checkbox
-              v-model="checkbox"
-              :error-messages="checkboxErrors"
-              label="¿Estas de acuerdo?"
-              required
-              @change="$v.checkbox.$touch()"
-              @blur="$v.checkbox.$touch()"
-              class="ml-6"
-            ></v-checkbox>
-            <v-row class="mr-1 mb-2" justify="center">
-              <v-dialog v-model="dialog" persistent max-width="290">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on" small>
-                    Terminos y condiciones
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title class="headline">
-                    Use Google's location service?
-                  </v-card-title>
-                  <v-card-text
-                    >Let Google help apps determine location. This means sending
-                    anonymous location data to Google, even when no apps are
-                    running.</v-card-text
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md6 lg5 x14>
+          <v-card>
+            <div class="mt-13">
+              <div class="d-flex justify-content-center align-items-center">
+                <img
+                  src="@/assets/TuDado.png"
+                  width="150"
+                  height="150"
+                  alt=""
+                />
+                <h1 class="font-weight-black text-danger">TuDado</h1>
+              </div>
+              <h1 class="alert alert-secundary mt-5 ml-15">¡Unete a TuDado!</h1>
+
+              <validation-observer ref="observer" v-slot="{ invalid }">
+                <form @submit.prevent="submit">
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="Nombre"
+                    rules="required|max:20"
                   >
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" text @click="dialog = false">
-                      Desacuerdo
+                    <v-text-field
+                      class="ml-6 mr-6"
+                      v-model="nombre"
+                      :counter="20"
+                      :error-messages="errors"
+                      label="Nombre"
+                      required
+                    ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="email"
+                    rules="required|email"
+                  >
+                    <v-text-field
+                      class="ml-6 mr-6"
+                      v-model="email"
+                      :error-messages="errors"
+                      label="E-mail"
+                      required
+                    ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="password"
+                    rules="required|password:@confirm"
+                  >
+                    <v-text-field
+                    
+                      v-model="password"
+                      :error-messages="errors"
+                      type="password"
+                      label="Contraseña"
+                      required
+                      class="ml-6 mr-6"
+                    ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="confirm"
+                    rules="required"
+                    
+                  >
+                    <v-text-field
+                      v-model="confirmation"
+                      :error-messages="errors"
+                      type="password"
+                      label=" repita la contraseña"
+                      required
+                      class="ml-6 mr-6"
+                    ></v-text-field>
+                  </validation-provider>
+                  <validation-provider
+                    v-slot="{ errors }"
+                    rules="required"
+                    name="checkbox"
+                  >
+                    <v-checkbox
+                      class="ml-6 mr-6"
+                      v-model="checkbox"
+                      :error-messages="errors"
+                      value="1"
+                      label="terminos y condiciones"
+                      type="checkbox"
+                      required
+                    ></v-checkbox>
+                  </validation-provider>
+                  <v-row class="mr-1 mb-2" justify="center">
+                    <v-dialog v-model="dialog" persistent max-width="800">
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="primary"
+                          dark
+                          v-bind="attrs"
+                          v-on="on"
+                          small
+                        >
+                          Terminos y condiciones
+                        </v-btn>
+                      </template>
+                      <v-card>
+                        <v-card-title class="headline">
+                          Terminos y Condiciones
+                        </v-card-title>
+                        <v-card-text
+                          >Lorem ipsum, dolor sit amet consectetur adipisicing
+                          elit. Natus facere magni aliquam blanditiis voluptatem
+                          assumenda ipsam omnis pariatur aliquid ex esse nostrum
+                          iure autem nulla a, quo asperiores, impedit
+                          officia?</v-card-text
+                        >
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="green darken-1"
+                            text
+                            @click="dialog = false"
+                          >
+                            Salir
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-row>
+                  <v-row justify="center" class="mt-3 mb-6">
+                    <v-btn
+                      color="orange"
+                      class="mr-4 mb-4"
+                      type="submit"
+                      :disabled="invalid"
+                      @click="registrar"
+                    >
+                      Enviar
                     </v-btn>
-                    <v-btn color="green darken-1" text @click="dialog = false">
-                      Acuerdo
+                    <v-btn class="mr-4 mb-4" color="error" @click="clear">
+                      Limpiar
                     </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-row>
-            <v-row justify="center" class="mt-3 mb-6">
-            <v-btn class="mr-4 mb-4" @click="registrar" color="orange">
-              Enviar
-            </v-btn>
-            <v-btn class="mr-4 mb-4" @click="clear" color="error"> Limpiar </v-btn>
-            </v-row>
-          </form>
-        </div>
-        </v-card>
-      </v-flex>
-    </v-layout>
+                  </v-row>
+                </form>
+              </validation-observer>
+            </div>
+          </v-card>
+        </v-flex>
+      </v-layout>
     </main>
-<v-footer dark padless class="d-flex justify-center mt-10">
+    <v-footer dark padless class="d-flex justify-center mt-10">
       <v-card flat tile class="indigo darken-4 white--text text-center">
         <v-card-text>
           <v-btn
@@ -252,96 +309,97 @@
 <script>
 import sawl from "sweetalert";
 import axios from "axios";
-import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
+import { required, digits, email, max, regex } from "vee-validate/dist/rules";
+import {
+  extend,
+  ValidationObserver,
+  ValidationProvider,
+  setInteractionMode,
+} from "vee-validate";
+
+setInteractionMode("eager");
+
+extend(
+  "required",
+  {
+    ...required,
+    message: "{_field_} no puede ir vacio",
+  },);
+extend(
+  'password', 
+  {
+    params: ['target'],
+    validate(value, { target }) {
+      return value === target;
+  },
+  message: 'Las contraseñas no son iguales'
+});
+extend("max", {
+  ...max,
+  message: "{_field_} no puede tener mas de {length} caracteres",
+});
+
+extend("regex", {
+  ...regex,
+  message: "{_field_} {_value_} does not match {regex}",
+});
+
+extend("email", {
+  ...email,
+  message: "Email no valido",
+});
 
 export default {
-  mixins: [validationMixin],
-  validations: {
-    name: { required, maxLength: maxLength(20) },
-    email: { required, email },
-    contraseña: { required },
-    checkbox: {
-      checked(val) {
-        return val;
-      },
-    },
+  components: {
+    ValidationProvider,
+    ValidationObserver,
   },
 
   data: () => ({
-    name: "",
+    nombre: "",
     email: "",
-    contraseña: "",
-    checkbox: false,
-    dialog: false,
+    password: "",
+    confirmation: "",
+    checkbox: null,
+    dialog: null,
     icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
   }),
 
-  computed: {
-    checkboxErrors() {
-      const errors = [];
-      if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked &&
-        errors.push("Acepta los terminos y condiciones!");
-      return errors;
-    },
-    contraseñaErrors() {
-      const errors = [];
-      if (!this.$v.contraseña.$dirty) return errors;
-      !this.$v.contraseña.required && errors.push("Contraseña requerida");
-      return errors;
-    },
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.maxLength &&
-        errors.push("El nombre no puede contener mas de 20 letras");
-      !this.$v.name.required && errors.push("Nombre es requerido");
-      return errors;
-    },
-    emailErrors() {
-      const errors = [];
-      if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Email no valido!");
-      !this.$v.email.required && errors.push("E-mail es requerido");
-      return errors;
-    },
-  },
-
   methods: {
-    registrar() {
-      if (this.checkbox) {
-        axios
-          .post(
-            "http://localhost:3000/api/usuario/add",
-            {
-              nombre: this.name,
-              email: this.email,
-              password: this.contraseña,
-            },
-            {
-              headers: {
-                token: this.$store.state.token,
-              },
-            }
-          )
-          .then((response) => {
-            swal("Buen Trabajo!", "Usuario Creado", "success");
-            this.$router.push({ name: "Home" });
-          })
-          .catch((error) => {
-            return error;
-          });
-      } else {
-        swal("Error!", "Terminos no aceptados", "error");
-      }
+    submit() {
+      this.$refs.observer.validate();
     },
+    registrar() {
+      axios
+        .post(
+          "http://localhost:3000/api/usuario/add",
+          {
+            nombre: this.nombre,
+            email: this.email,
+            password: this.password,
+          },
+          {
+            headers: {
+              token: this.$store.state.token,
+            },
+          }
+        )
+        .then((response) => {
+          swal("Buen Trabajo!", "Usuario Creado", "success");
+          this.$router.push({ name: "Home" });
+        })
+        .catch((error) => {
+          return error;
+        });
+    },
+
     clear() {
-      this.$v.$reset();
       this.name = "";
       this.email = "";
-      this.contraseña = "";
-      this.checkbox = false;
+      this.password = "";
+      this.confirmation = "";
+      this.checkbox = null;
+      this.$refs.observer.reset();
     },
     inicio() {
       this.$router.push({ name: "Home" });
