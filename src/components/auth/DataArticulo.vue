@@ -212,7 +212,7 @@ export default {
   methods: {
     list() {
       axios
-        .get("https://backend-tudado.herokuapp.com/api/articulo/list", {
+        .get("http://localhost:3000/api/articulo/list", {
           headers: {
             token: this.$store.state.token
           }
@@ -227,7 +227,7 @@ export default {
     },
     listCategoria() {
       axios
-        .get("https://backend-tudado.herokuapp.com/api/categoria/list", {
+        .get("http://localhost:3000/api/categoria/list", {
           headers: {
             token: this.$store.state.token
           }

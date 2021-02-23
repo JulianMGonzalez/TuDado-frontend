@@ -1,4 +1,5 @@
 <template>
+
     <blog-component></blog-component>
 </template>
 

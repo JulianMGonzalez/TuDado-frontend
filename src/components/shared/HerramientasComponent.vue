@@ -1,0 +1,77 @@
+<template>
+  <v-card>
+    <!--  -->
+    <v-speed-dial
+     fixed
+      v-model="fab"
+      bottom
+      right
+      direction="top"
+      open-on-hover
+      transition="slide-y-reverse-transition"
+    >
+      <template v-slot:activator>
+        <v-btn
+          v-model="fab"
+          color="blue darken-2"
+          dark
+          fab
+        >
+          <v-icon v-if="fab">
+            mdi-close
+          </v-icon>
+          <v-icon v-else>
+            mdi-help
+          </v-icon>
+        </v-btn>
+      </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="green"
+        onclick="window.open('https://wa.me/573232477487', '_blank')"
+      >
+        <v-icon>mdi-whatsapp</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="indigo"
+      >
+        <v-icon>mdi-theme-light-dark</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="red"
+      >
+        <v-icon>mdi-translate</v-icon>
+      </v-btn>
+    </v-speed-dial>
+  </v-card>
+</template>
+
+<script>
+  export default {
+    data: () => ({
+      fab: false,
+    }),
+
+
+  }
+</script>
+
+<style>
+
+</style>
