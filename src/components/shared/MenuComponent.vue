@@ -10,11 +10,11 @@
             src="@/assets/TuDado.png"
           ></v-img>
         </v-btn>
-        <v-btn text to="/">
-          <h1 class="white--text font-weight-black display-1 mx-auto">
+        <a href="/" class="ml-5">
+          <h1 class="font-weight-black display white--text">
             TuDado
           </h1>
-        </v-btn>
+        </a>
         <v-spacer></v-spacer>
         <v-btn
           v-for="(icon, i) in icons"

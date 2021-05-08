@@ -5,12 +5,11 @@
   <transition name="slide-fade" mode="out-in"> 
         <router-view/>
   </transition>
-  <footer-component></footer-component>>  
+  <footer-component></footer-component>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/public/HelloWorld'
 import FooterComponent from './components/shared/FooterComponent.vue';
 import HerramientasComponent from './components/shared/HerramientasComponent.vue';
 import MenuComponent from './components/shared/MenuComponent.vue';
@@ -19,7 +18,6 @@ export default {
   name: 'App',
 
   components: {
-    HelloWorld,
     MenuComponent,
     HerramientasComponent,
     FooterComponent
@@ -33,6 +31,10 @@ export default {
 <style>
   #app{
     font-family: 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url("~@/assets/bgMain.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
   }
   .fade-enter-active, .fade-leave-active {
   transition-property: opacity;

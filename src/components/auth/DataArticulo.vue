@@ -66,6 +66,15 @@
                           counter="256"
                         ></v-textarea>
                       </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                          v-model="editedItem.imagen"
+                          label="Imagen"
+                          auto-grow
+                          no-resize
+                          counter="256"
+                        ></v-textarea>
+                      </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-select
                           v-model="categoria"
@@ -145,7 +154,7 @@ export default {
     dialog: false,
     dialogDelete: false,
     cargando: true,
-    search: '',
+    search: "",
     headers: [
       { text: "ID", value: "id" },
       {
@@ -155,6 +164,7 @@ export default {
         value: "nombre",
       },
       { text: "Descripcion", value: "descripcion" },
+      { text: "Imagen", value: "imagen" },
       { text: "Codigo", value: "codigo" },
       { text: "Categoria", value: "categoriaId" },
       { text: "Estado", value: "estado" },
@@ -163,29 +173,31 @@ export default {
     desserts: [],
     articulos: [],
     categorias: [],
-    categoria: '',
+    categoria: "",
     editedIndex: -1,
     editedItem: {
       id: 0,
-      nombre: '',
-      descripcion: '',
-      codigo: '',
+      nombre: "",
+      descripcion: "",
+      codigo: "",
       estado: 0,
+      imagen: '',
       categoria: {
         id: 0,
-        nombre: '',
-      }
+        nombre: "",
+      },
     },
     defaultItem: {
       id: 0,
-      nombre: '',
-      descripcion: '',
-      codigo: '',
+      nombre: "",
+      descripcion: "",
+      codigo: "",
       estado: 0,
+      imagen: '',
       categoria: {
         id: 0,
-        nombre: '',
-      }
+        nombre: "",
+      },
     },
   }),
 
@@ -214,8 +226,8 @@ export default {
       axios
         .get("http://localhost:3000/api/articulo/list", {
           headers: {
-            token: this.$store.state.token
-          }
+            token: this.$store.state.token,
+          },
         })
         .then((response) => {
           this.articulos = response.data;
@@ -229,8 +241,8 @@ export default {
       axios
         .get("http://localhost:3000/api/categoria/list", {
           headers: {
-            token: this.$store.state.token
-          }
+            token: this.$store.state.token,
+          },
         })
         .then((response) => {
           this.categorias = response.data;
@@ -242,7 +254,7 @@ export default {
 
     editItem(item) {
       this.editedIndex = item.id;
-      this.categoria = item? item.categoriaId : '';
+      this.categoria = item ? item.categoriaId : "";
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
@@ -256,13 +268,17 @@ export default {
     deleteItemConfirm() {
       if (this.editedItem.estado === 1) {
         axios
-          .put("https://backend-tudado.herokuapp.com/api/articulo/deactivate", {
-            id: this.editedItem.id,
-          }, {
-          headers: {
-            token: this.$store.state.token
-          }
-        })
+          .put(
+            "http://localhost:3000/api/articulo/deactivate",
+            {
+              id: this.editedItem.id,
+            },
+            {
+              headers: {
+                token: this.$store.state.token,
+              },
+            }
+          )
           .then((response) => {
             this.list();
           })
@@ -271,13 +287,17 @@ export default {
           });
       } else {
         axios
-          .put("https://backend-tudado.herokuapp.com/api/articulo/activate", {
-            id: this.editedItem.id,
-          }, {
-          headers: {
-            token: this.$store.state.token
-          }
-        })
+          .put(
+            "http://localhost:3000/api/articulo/activate",
+            {
+              id: this.editedItem.id,
+            },
+            {
+              headers: {
+                token: this.$store.state.token,
+              },
+            }
+          )
           .then((response) => {
             this.list();
           })
@@ -293,7 +313,7 @@ export default {
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
-        this.categoria = '';
+        this.categoria = "";
       });
     },
 
@@ -308,17 +328,22 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         axios
-          .put("https://backend-tudado.herokuapp.com/api/articulo/update", {
-            id: this.editedItem.id,
-            nombre: this.editedItem.nombre,
-            descripcion: this.editedItem.descripcion,
-            codigo: this.editedItem.codigo,
-            categoria: this.categoria.id
-          }, {
-          headers: {
-            token: this.$store.state.token
-          }
-        })
+          .put(
+            "http://localhost:3000/api/articulo/update",
+            {
+              id: this.editedItem.id,
+              nombre: this.editedItem.nombre,
+              descripcion: this.editedItem.descripcion,
+              codigo: this.editedItem.codigo,
+              categoria: this.categoria.id,
+              imagen: this.editedItem.imagen
+            },
+            {
+              headers: {
+                token: this.$store.state.token,
+              },
+            }
+          )
           .then((response) => {
             this.list();
           })
@@ -327,18 +352,23 @@ export default {
           });
       } else {
         axios
-          .post("https://backend-tudado.herokuapp.com/api/articulo/add", {
-            estado: 1,
-            id: this.editedItem.id,
-            nombre: this.editedItem.nombre,
-            descripcion: this.editedItem.descripcion,
-            codigo: this.editedItem.codigo,
-            categoriaId: this.categoria.id
-          }, {
-          headers: {
-            token: this.$store.state.token
-          }
-        })
+          .post(
+            "http://localhost:3000/api/articulo/add",
+            {
+              estado: 1,
+              id: this.editedItem.id,
+              nombre: this.editedItem.nombre,
+              descripcion: this.editedItem.descripcion,
+              codigo: this.editedItem.codigo,
+              categoriaId: this.categoria.id,
+              imagen: this.editedItem.imagen
+            },
+            {
+              headers: {
+                token: this.$store.state.token,
+              },
+            }
+          )
           .then((response) => {
             this.list();
           })
